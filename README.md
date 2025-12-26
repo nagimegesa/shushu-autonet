@@ -136,7 +136,7 @@ python main.py [选项]
 pip install -r requirements.txt
 ```
 
-### 3. Wi-Fi连接失败
+### 3. WiFi连接失败
 **可能原因**:
 - Wi-Fi网络名称不正确
 - 系统权限不足
@@ -156,7 +156,7 @@ self.driver.execute_script(f"document.getElementById(arguments[0]).value = argum
 self.driver.execute_script(f"document.getElementById(arguments[0]).value = arguments[1];", "pwd", self.password)
 ```
 
-5. **设置自启动和定时任务**
+### 5. **设置自启动和定时任务**
 + windows
 
     参考链接：https://zhuanlan.zhihu.com/p/430602325
