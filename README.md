@@ -1,7 +1,7 @@
 # 上海大学校园网自动连接脚本
 
 上海大学自动连接校园网络的Python脚本，支持有线/无线网络检测和浏览器自动化认证。
-改项目灵感直接来源于[项目shu-auto-net
+该项目灵感直接来源于[项目shu-auto-net
 ](https://github.com/DongZhouGu/shu-auto-net)。但是该项目已经很多年没有更新，所以重写了一个版本。
 
 ## 环境要求
@@ -43,7 +43,7 @@ python main.py
 
 ### 命令行参数
 ```bash
-python campus_network.py [选项]
+python main.py [选项]
 
 选项:
   -h, --help            显示帮助信息
@@ -57,22 +57,22 @@ python campus_network.py [选项]
 
 1. **使用默认配置**（需要提前在脚本中设置用户名密码）
    ```bash
-   python campus_network.py
+   python main.py
    ```
 
 2. **通过命令行指定账号密码**
    ```bash
-   python campus_network.py -u 学号 -p 密码
+   python main.py -u 学号 -p 密码
    ```
 
 3. **指定不同Wi-Fi网络**
    ```bash
-   python campus_network.py -u 学号 -p 密码 -s "Wi-Fi名称"
+   python main.py -u 学号 -p 密码 -s "Wi-Fi名称"
    ```
 
 4. **后台无头模式运行**
    ```bash
-   python campus_network.py -u 学号 -p 密码 --headless
+   python main.py -u 学号 -p 密码 --headless
    ```
 
 ## 工作原理
