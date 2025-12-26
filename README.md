@@ -148,7 +148,7 @@ self.driver.execute_script(f"document.getElementById(arguments[0]).value = argum
 **设置自启动和定时任务**
 1. windows
 
-    参考链接：https://blog.csdn.net/u012849872/article/details/82719372
+    参考链接：https://zhuanlan.zhihu.com/p/430602325
 
 2. Linux 
 
