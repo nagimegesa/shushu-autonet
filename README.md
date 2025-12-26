@@ -12,7 +12,7 @@
 ### 依赖包
 安装所需依赖：
 ```bash
-pip install selenium psutil pywifi
+pip install -r requirements.txt
 ```
 
 ### 浏览器驱动
