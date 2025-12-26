@@ -50,6 +50,7 @@ python main.py [选项]
   -u, --username TEXT   校园网账号（学号）
   -p, --password TEXT   校园网密码
   -s, --ssid TEXT       Wi-Fi网络名称（默认：Shu(ForAll)）
+  -d, --driver TEXT     Edge WebDriver路径（默认：./edgedriver_win64/msedgedriver.exe）
   --headless            无头模式（不显示浏览器界面）
 ```
 
@@ -73,6 +74,11 @@ python main.py [选项]
 4. **后台无头模式运行**
    ```bash
    python main.py -u 学号 -p 密码 --headless
+   ```
+
+5. **指定Edge WebDriver路径**
+   ```bash
+   python main.py -u 学号 -p 密码 -d "path\to\msedgedriver.exe"
    ```
 
 ## 工作原理
@@ -116,6 +122,11 @@ python main.py [选项]
 2. 将 `msedgedriver.exe` 放在 `edgedriver_win64` 目录下
 3. 或将其添加到系统PATH环境变量中
 
+**问题**: 想要使用其他浏览器
+
+脚本默认使用Microsoft Edge浏览器。如果需要使用其他浏览器，需要修改脚本中的浏览器驱动配置。
+例如，使用Chrome浏览器需要下载Chrome WebDriver并替换 `msedgedriver.exe`。并修改脚本中的浏览器驱动配置。
+
 ### 2. 依赖安装问题
 **问题**: `ModuleNotFoundError: No module named 'pywifi'`
 
@@ -145,19 +156,14 @@ self.driver.execute_script(f"document.getElementById(arguments[0]).value = argum
 self.driver.execute_script(f"document.getElementById(arguments[0]).value = arguments[1];", "pwd", self.password)
 ```
 
-**设置自启动和定时任务**
-1. windows
+5. **设置自启动和定时任务**
++ windows
 
     参考链接：https://zhuanlan.zhihu.com/p/430602325
 
-2. Linux 
++ Linux 
 
     都用Linux了，你肯定懂的。
-
-3. 使用其他浏览器
-
-    脚本默认使用Microsoft Edge浏览器。如果需要使用其他浏览器，需要修改脚本中的浏览器驱动配置。
-    例如，使用Chrome浏览器需要下载Chrome WebDriver并替换 `msedgedriver.exe`。并修改脚本中的浏览器驱动配置。
 
 ## 注意事项
 

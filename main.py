@@ -14,6 +14,7 @@ from typing import Tuple, Optional
 
 # 浏览器自动化相关
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -25,6 +26,10 @@ from pywifi import const
 
 DEFAULT_USER_NAME = "xxx" # 这里写你的学号
 DEFAULT_PASSWD = "xxx" # 这里写你的密码
+
+WEB_DRIVER_PATH = None
+if os.path.exists("./edgedriver_win64/msedgedriver.exe"):
+    WEB_DRIVER_PATH = "./edgedriver_win64/msedgedriver.exe"
 
 
 # 配置日志
@@ -174,10 +179,11 @@ class WiFiConnector:
 class BrowserAuthenticator:
     """浏览器认证器"""
     
-    def __init__(self, username: str, password: str):
+    def __init__(self, username: str, password: str, driver_path: str = WEB_DRIVER_PATH):
         self.username = username
         self.password = password
         self.driver = None
+        self.driver_path = driver_path
     
     def init_browser(self, headless: bool = False) -> bool:
         """初始化浏览器"""
@@ -190,7 +196,12 @@ class BrowserAuthenticator:
             options.add_argument('--no-sandbox')
             options.add_argument('--disable-dev-shm-usage')
             
-            self.driver = webdriver.Edge(options=options)
+            if self.driver_path is not None:
+                service = Service(executable_path=self.driver_path)
+                self.driver = webdriver.Edge(service=service, options=options)
+            else:
+                self.driver = webdriver.Edge(options=options)
+            
             self.driver.implicitly_wait(5)
             
             logger.info("浏览器初始化完成")
@@ -252,7 +263,7 @@ class BrowserAuthenticator:
 class CampusNetworkManager:
     """校园网管理器"""
     
-    def __init__(self, username: str, password: str, ssid: str = "Shu(ForAll)"):
+    def __init__(self, username: str, password: str, ssid: str = "Shu(ForAll)", driver_path: str = WEB_DRIVER_PATH):
         self.username = username
         self.password = password
         self.ssid = ssid
@@ -260,7 +271,7 @@ class CampusNetworkManager:
         # 初始化组件
         self.detector = NetworkDetector()
         self.wifi_connector = WiFiConnector(ssid)
-        self.authenticator = BrowserAuthenticator(username, password)
+        self.authenticator = BrowserAuthenticator(username, password, driver_path)
     
     def check_and_connect(self, headless: bool = False) -> bool:
         """检查并连接网络"""
@@ -358,6 +369,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="校园网自动连接工具")
     parser.add_argument("-u", "--username", type=str, default=DEFAULT_USER_NAME, help="校园网账号")
     parser.add_argument("-p", "--password", type=str, default=DEFAULT_PASSWD, help="校园网密码")
+    parser.add_argument("-d", "--driver", type=str, default=WEB_DRIVER_PATH, help="浏览器驱动路径")
     parser.add_argument("-s", "--ssid", default="Shu(ForAll)", help="Wi-Fi网络名称")
     parser.add_argument("--headless", action="store_true", default=False, help="无头模式")
     return parser.parse_args()
@@ -371,7 +383,8 @@ def main():
     manager = CampusNetworkManager(
         username=args.username,
         password=args.password,
-        ssid=args.ssid
+        ssid=args.ssid,
+        driver_path=args.driver
     )
     
     try:
